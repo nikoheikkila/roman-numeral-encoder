@@ -36,10 +36,19 @@ func Encode(x int) (string, error) {
 	var quotient int
 
 	for _, numeral := range numerals {
+		// Check whether current number matches the element from
+		// ROMAN_NUMBERS ordered list and return the matching character.
+		// Since matches are not always even, place the remainder back to x
+		// for recursively solving the rest of the data.
 		quotient, x = divmod(x, numeral.arabic)
+
+		// strings.Repeat() takes care of zeroes so we don't have to add
+		// conditional clauses.
 		result = append(result, strings.Repeat(numeral.roman, quotient))
 	}
 
+	// Join the result slice to string eliminating all empty values, and
+	// thus returning the final desired value.
 	return strings.Join(result, ""), nil
 }
 
